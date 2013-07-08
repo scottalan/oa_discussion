@@ -14,7 +14,6 @@ dependencies[] = file
 dependencies[] = media
 dependencies[] = message
 dependencies[] = oa_core
-dependencies[] = oa_messages
 dependencies[] = oa_sections
 dependencies[] = og
 dependencies[] = og_ui
