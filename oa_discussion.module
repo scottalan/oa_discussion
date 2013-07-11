@@ -172,9 +172,18 @@ function oa_discussion_preprocess_views_view_fields(&$vars) {
         $status = $vars['fields']['status']->raw;
         $vars['status_class'] = ($status == 1) ? 'published' : 'unpublished';
         $vars['unpublished'] = ($status == 1) ? '' : t('Not Published');
-        $vars['remove_link'] = ($status == 1)
-          ? l(t('unpublish'), 'node/' . $vars['fields']['nid']->raw . '/remove')
-          : l(t('publish'), 'node/' . $vars['fields']['nid']->raw . '/publish');
+
+        $node = node_load($nid);
+
+        if ($status == 1 && node_access('update', $node)) {
+          $vars['remove_link'] =l(t('unpublish'), 'node/' . $vars['fields']['nid']->raw . '/remove');
+        }
+        elseif (node_access('update', $node)) {
+          $vars['remove_link'] =l(t('publish'), 'node/' . $vars['fields']['nid']->raw . '/publish');
+        }
+        else {
+          unset($vars['remove_link']);
+        }
       }
     }
 
