@@ -44,7 +44,9 @@
       <?php print $field_oa_media; ?>
       <div class="links">
         <?php print $edit_node; ?>
-        <?php print $remove_link; ?>
+        <?php if (!empty($remove_link)) : ?>
+          <?php print $remove_link; ?>
+        <?php endif; ?>
       </div>
     </div>
   </div>
