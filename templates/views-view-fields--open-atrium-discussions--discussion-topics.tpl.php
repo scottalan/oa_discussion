@@ -30,8 +30,8 @@
   </div>
   <div class='oa-list-header oa-description pull-right'>
     <?php print $nid_2 . " " . format_plural($nid_2, t('reply'), t('replies')); ?>
-    <?php if (!empty($timestamp_new)) { print $timestamp_new . t(' new'); } ?>
-    <?php if (!empty($timestamp_updated)) { print $timestamp_updated . t(' updated'); } ?>
+    <?php if (!empty($timestamp_new)): print $timestamp_new . t(' new'); endif; ?>
+    <?php if (!empty($timestamp_updated)): print $timestamp_updated . t(' updated'); endif; ?>
     <?php
       $last_post = (!empty($nid_3)) ? $nid_3 : $nid;
       print t(" Last update: ") . l($last_date, 'node/'.$last_post);
