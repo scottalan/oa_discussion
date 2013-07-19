@@ -546,43 +546,6 @@ function oa_discussion_panelizer_defaults() {
     $pane->locks = array();
     $display->content['new-15'] = $pane;
     $display->panels['sidebar'][0] = 'new-15';
-    $pane = new stdClass();
-    $pane->pid = 'new-16';
-    $pane->panel = 'sidebar';
-    $pane->type = 'oa_widgets_add_content';
-    $pane->subtype = 'oa_widgets_add_content';
-    $pane->shown = TRUE;
-    $pane->access = array();
-    $pane->configuration = array(
-      'oa_widgets_types' => array(
-        'oa_discussion_post' => 'oa_discussion_post',
-        'oa_wiki_page' => 'oa_wiki_page',
-        'oa_group' => 0,
-        'oa_space' => 0,
-        'oa_section' => 0,
-        'oa_team' => 0,
-        'panopoly_page' => 0,
-      ),
-      'oa_widgets_use_all' => TRUE,
-      'return' => 'Finish',
-      'cancel' => 'Cancel',
-      'override_title' => 0,
-      'override_title_text' => '',
-      'form_build_id' => 'form-dslFsEXDfB27wtWeoeIXsmgZYdA71Pf2Y4ecv-nj_9w',
-      'form_token' => 'isC-J5K3dQfeMpsBqZG_34ROSt8JFxt7s9-jtqd79pI',
-      'form_id' => 'oa_widgets_add_content_edit_form',
-      'op' => 'Finish',
-    );
-    $pane->cache = array();
-    $pane->style = array(
-      'settings' => NULL,
-    );
-    $pane->css = array();
-    $pane->extras = array();
-    $pane->position = 1;
-    $pane->locks = array();
-    $display->content['new-16'] = $pane;
-    $display->panels['sidebar'][1] = 'new-16';
   $display->hide_title = PANELS_TITLE_FIXED;
   $display->title_pane = '0';
   $panelizer->display = $display;
