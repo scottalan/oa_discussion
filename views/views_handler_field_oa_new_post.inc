@@ -18,7 +18,6 @@ class views_handler_field_oa_new_post extends views_handler_field_numeric {
     $node = $this->query->ensure_table('node', $this->relationship);
 
     $params = $this->options['group_type'] != 'group' ? array('function' => $this->options['group_type']) : array();
-    $
     $this->field_alias = $this->query->add_field(NULL, "CASE WHEN $field IS NULL AND ($node.changed > $limit) THEN 1 ELSE 0 END", $this->table . '_' . $this->field, $params);
   }
 }
