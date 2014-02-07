@@ -22,6 +22,7 @@ function oa_discussion_og_features_default_permissions() {
   $permissions['node:oa_group:create oa_discussion_post content'] = array(
     'roles' => array(
       'administrator member' => 'administrator member',
+      'member' => 'member',
     ),
   );
 
