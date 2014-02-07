@@ -144,6 +144,26 @@ function oa_discussion_publish($node) {
 }
 
 /**
+ * Implements hook_og_permission().
+ */
+function oa_discussion_og_permission() {
+  return array(
+    'write oa_discussion_reply to discussion post' => array(
+      'title' => t('Reply to a discussion post'),
+      'description' => t('Allow a group member to reply to a discussion post.'),
+      'roles' => array(OG_AUTHENTICATED_ROLE),
+      'default role' => array(OG_AUTHENTICATED_ROLE, OG_ADMINISTRATOR_ROLE),
+    ),
+    'add attachment to oa_discussion_post' => array(
+      'title' => t('Add attachment to a discussion post reply'),
+      'description' => t('Allow a group member to add an attachment to a discussion post reply.'),
+      'roles' => array(OG_AUTHENTICATED_ROLE),
+      'default role' => array(OG_AUTHENTICATED_ROLE, OG_ADMINISTRATOR_ROLE),
+    ),
+  );
+}
+
+/**
  * Preprocess the media thumbnail.
  * Add any additional File Caption
  */
