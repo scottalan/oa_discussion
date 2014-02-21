@@ -374,7 +374,7 @@ function oa_discussion_clone_access_alter(&$access, $node) {
  * Implements hook_node_insert().
  */
 function oa_discussion_node_insert($node) {
-  if (module_exists('oa_clone') && !empty($node->clone_from_original_nid)) {
+  if ($node->type == 'oa_discussion_post' && !empty($node->clone_from_original_nid) && module_exists('oa_clone')) {
     $original_nid = $node->clone_from_original_nid;
 
     // Get the replies.
