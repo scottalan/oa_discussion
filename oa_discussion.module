@@ -346,3 +346,60 @@ function oa_discussion_notifications_users_alter(&$users, $node) {
   }
 }
 
+/**
+ * Implements hook_module_implements_alter().
+ */
+function oa_discussion_module_implements_alter(&$implementations, $hook) {
+  if ($hook == 'clone_access_alter') {
+    // Make sure we run last because we need to absolutely revoke access
+    // if the discussion is a reply (ie. no other module should turn give
+    // access back).
+    $group = $implementations['oa_discussion'];
+    unset($implementations['oa_discussion']);
+    $implementations['oa_discussion'] = $group;
+  }
+}
+
+/**
+ * Implements hook_clone_access_alter().
+ */
+function oa_discussion_clone_access_alter(&$access, $node) {
+  // If this is a reply, don't allow it to be cloned!
+  if (!empty($node->oa_parent[LANGUAGE_NONE][0]['target_id'])) {
+    $access = FALSE;
+  }
+}
+
+/**
+ * Implements hook_node_insert().
+ */
+function oa_discussion_node_insert($node) {
+  if (module_exists('oa_clone') && !empty($node->clone_from_original_nid)) {
+    $original_nid = $node->clone_from_original_nid;
+
+    // Get the replies.
+    $query = new EntityFieldQuery();
+    $query
+      ->entityCondition('entity_type', 'node')
+      ->entityCondition('bundle', 'oa_discussion_post')
+      ->fieldCondition('oa_parent', 'target_id', $original_nid);
+    $result = $query->execute();
+
+    // Get the Space and Section ids from the current discussion. This is
+    // important, because this clone could be creating a whole new Space or
+    // Section which these replies are going into.
+    $space_nid = $node->og_group_ref[LANGUAGE_NONE][0]['target_id'];
+    $section_nid = $node->oa_section_ref[LANGUAGE_NONE][0]['target_id'];
+
+    // Clone all the replies, attaching them to this new discussion.
+    if (!empty($result['node'])) {
+      $original_replies = node_load_multiple(array_keys($result['node']));
+      foreach ($original_replies as $original_reply) {
+        if ($clone = oa_clone_prepare($original_reply, $space_nid, $section_nid, TRUE)) {
+          $clone->oa_parent[LANGUAGE_NONE][0]['target_id'] = $node->nid;
+          oa_clone_save($clone);
+        }
+      }
+    }
+  }
+}
